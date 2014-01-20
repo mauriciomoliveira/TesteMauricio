@@ -1,0 +1,78 @@
+﻿@model Modelo.Categoria
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes da Categoria</h2>
+
+<div>
+    <h4>Categoria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            SubCategorias
+        </dt>
+
+        <dd>
+            <ul>
+                @Html.Partial("PartialPageCategoriasHierarquizadas", Model)
+            </ul>
+        </dd>
+
+    </dl>
+    @if (((Model.CategoriaPai == null) && (Model.TodosProdutos.Any())) || ((Model.CategoriaPai != null) && (Model.Produtos.Any())))
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                Produtos
+            </dt>
+
+            <dd>
+                <ul>
+                    @{
+        if (Model.CategoriaPai != null)
+        {
+            foreach (var item in Model.Produtos)
+            {
+                <li>@item.Descricao</li>
+            }
+        }
+        else
+        {
+            foreach (var item in Model.TodosProdutos)
+            {
+                <li>@item.Descricao</li>
+            }
+        }
+                    }
+                </ul>
+            </dd>
+        </dl>
+
+        if (Model.CategoriaPai != null)
+        {
+            <h6>* produtos apenas desta subcategoria.</h6>
+        }
+        else
+        {
+            <h6>* todos os produtos incluídos nesta categoria ou em uma de suas subcategorias.</h6>
+        }
+    }
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

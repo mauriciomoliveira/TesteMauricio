@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Modelo.Categoria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categorias</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Categorias e Subcategorias
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                @foreach (var item in Model.Where(c => (c.CategoriaPai == null)))
+                {
+                    <li>
+                        <div>
+                            @Html.DisplayFor(modelItem => item.Descricao) |
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Excluir", "Delete", new { id = item.Id })
+                        </div>
+                        @if (item.SubCategorias.Any())
+                        {
+                            <ul>
+                                @Html.Partial("PartialPageCategoriasHierarquizadasIndex", item)
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </td>
+    </tr>
+
+</table>

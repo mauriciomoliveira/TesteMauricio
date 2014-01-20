@@ -1,0 +1,50 @@
+﻿@model Teste.Models.ProdutoDecorator
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edição de Produto</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Produto</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descricao, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descricao)
+                @Html.ValidationMessageFor(model => model.Descricao)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Categorias, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @for (var i = 0; i < Model.Categorias.Count; i++)
+                {
+                    <div>
+                        @Html.HiddenFor(model => model.Categorias[i].Id)
+                        @Html.CheckBoxFor(model => model.Categorias[i].Selecionado) @Model.Categorias[i].Descricao
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

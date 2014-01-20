@@ -1,0 +1,20 @@
+﻿@model Modelo.Categoria
+
+
+@{
+    if (Model.SubCategorias.Any(sc => (sc.CategoriaPai != null) && (sc.CategoriaPai.Id == Model.Id)))
+    {
+        foreach (var cat in Model.SubCategorias.Where(sc => (sc.CategoriaPai != null) && (sc.CategoriaPai.Id == Model.Id)))
+        {
+            <li><div class="subcategoria">@cat.Descricao</div></li>
+            <ul>
+                @{
+            if (cat.SubCategorias.Any())
+            {
+                Html.RenderPartial("PartialPageCategoriasHierarquizadas", cat);
+            }
+                }
+            </ul>
+        }
+    }
+}

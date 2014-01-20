@@ -1,0 +1,25 @@
+﻿@model Modelo.Categoria
+
+
+@{
+    if (Model.SubCategorias.Any(sc => (sc.CategoriaPai != null) && (sc.CategoriaPai.Id == Model.Id)))
+    {
+        foreach (var item in Model.SubCategorias.Where(sc => (sc.CategoriaPai != null) && (sc.CategoriaPai.Id == Model.Id)))
+        {
+            <li>
+                <div>
+                    @item.Descricao |
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.Id })
+                </div>
+            </li>
+            <ul>
+                @if (item.SubCategorias.Any())
+                {
+                    Html.RenderPartial("PartialPageCategoriasHierarquizadasIndex", item);
+                }
+            </ul>
+        }
+    }
+}

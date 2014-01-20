@@ -1,0 +1,32 @@
+﻿@model Modelo.Categoria
+
+@{
+    if (Model.SubCategorias.Any(sc => (sc.CategoriaPai != null) && (sc.CategoriaPai.Id == Model.Id) && (sc.PossuiProdutos)))
+    {
+        foreach (var item in Model.SubCategorias.Where(sc => (sc.CategoriaPai != null) && (sc.CategoriaPai.Id == Model.Id) && (sc.PossuiProdutos)))
+        {
+            <li>
+                <div>
+                    @item.Descricao
+                </div>
+                <div>
+                    <ul>
+                        @foreach (var produto in item.Produtos)
+                        {
+                            <li>
+                                @produto.Descricao
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+            <ul>
+                @if (item.SubCategorias.Any())
+                {
+                    Html.RenderPartial("PartialProdutos", item);
+                }
+            </ul>
+        }
+    }
+}
+

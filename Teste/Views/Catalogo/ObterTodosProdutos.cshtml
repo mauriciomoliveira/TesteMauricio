@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Modelo.Categoria>
+
+@{
+    ViewBag.Title = "Todos os Produtos";
+}
+
+<h2>TodosProdutos</h2>
+<table class="table">
+    <tr>
+        <th>
+            Produtos Categorizados
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                @foreach (var item in Model.Where(c => (c.CategoriaPai == null) && (c.PossuiProdutos)))
+                {
+                    <li>
+                        <div>
+                            @item.Descricao
+                        </div>
+                        <div>
+                            <ul>
+                                @foreach (var produto in item.Produtos)
+                                {
+                                    <li>
+                                        @produto.Descricao
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        @if (item.SubCategorias.Any())
+                        {
+                            <ul>
+                                @Html.Partial("PartialProdutos", item)
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </td>
+    </tr>
+
+</table>

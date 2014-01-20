@@ -1,0 +1,38 @@
+﻿@model Modelo.Produto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes do Produto</h2>
+
+<div>
+    <h4>Produto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Categorias)
+        </dt>
+        @{
+            var modelo = Model;
+            foreach (var cat in modelo.Categorias)
+            {
+                <dd>@cat.Descricao</dd>
+            }
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
